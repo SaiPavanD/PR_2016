@@ -1,6 +1,7 @@
 classdef BayesClassifier
     properties
         train
+        
         test
         val
         numTest
@@ -12,6 +13,7 @@ classdef BayesClassifier
     end
     
     methods
+       
         
         function result = mv(obj,test,mean,sig)
             d = size(test, 2);
