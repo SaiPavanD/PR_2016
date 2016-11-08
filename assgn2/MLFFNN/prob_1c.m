@@ -44,7 +44,10 @@ end
 [~,testInd] = size(inputs);
 
 net = patternnet(numHiddenLayers);
-net.trainParam.goal=1e-6;
+net.trainParam.epochs=10000;
+net.trainParam.max_fail=1000;
+net.trainParam.goal=1e-8;
+net.trainParam.min_grad=1e-8;
 net.divideFcn = 'divideind';
 net.divideParam.trainInd = 1:trainInd;
 net.divideParam.valInd = trainInd+1:valInd;

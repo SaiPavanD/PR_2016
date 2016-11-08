@@ -1,6 +1,6 @@
 root = '../data/non-linearly_Separable/';
 numClasses = 3;
-numHiddenLayers = 2;
+numHiddenLayers = 3;
 step = 0.05;
 
 inputs = [];
@@ -44,7 +44,10 @@ end
 [~,testInd] = size(inputs);
 
 net = patternnet(numHiddenLayers);
-net.trainParam.goal=1e-10;
+net.trainParam.epochs=10000;
+net.trainParam.max_fail=5000;
+net.trainParam.goal=1e-8;
+net.trainParam.min_grad=1e-8;
 net.divideFcn = 'divideind';
 net.divideParam.trainInd = 1:trainInd;
 net.divideParam.valInd = trainInd+1:valInd;
