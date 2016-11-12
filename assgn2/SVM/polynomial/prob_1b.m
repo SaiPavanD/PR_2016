@@ -1,5 +1,5 @@
-root = '../data/linearly_Separable_Data/';
-numClasses = 4;
+root = '../../data/non-linearly_Separable/';
+numClasses = 3;
 c = 1;
 step = 0.05;
 
@@ -40,22 +40,22 @@ for i = 1:numClasses
    test_labels = [test_labels ; temp_labels];
 end
 
-model = svmtrain(train_labels, train_data,'-s 0 -t 0 -q -c 2');
+model = svmtrain(train_labels, train_data,'-s 0 -t 1 -q -d 2');
 output_labels_val = svmpredict(val_labels, val_data, model);
 output_labels_test = svmpredict(test_labels, test_data, model);
 
-[x,y] = meshgrid(-17:step:17,-17:step:20);
+[x,y] = meshgrid(-3.5:step:3.5,-3.5:step:3.5);
 decisionRegionPoints = [x(:),y(:)];
 dummyLabels = zeros(size(decisionRegionPoints,1),1);
 decisionRegionOutputs = svmpredict(dummyLabels, decisionRegionPoints, model,'-q');
 
-colors=[1 0.75 0.75; 0.75 1 0.75; 0.75 0.75 1; 1 1 0.75];
+colors=[1 0.75 0.75; 0.75 1 0.75; 0.75 0.75 1];
 plot1 = gscatter(decisionRegionPoints(:,1),decisionRegionPoints(:,2),decisionRegionOutputs,colors,'****',[],'off');
 hold on;
 xlabel('Dimension 1');
 ylabel('Dimension 2');
 plot2 = gscatter(train_data(:,1),train_data(:,2),train_labels,'rgby','....');
 hold on;
-axis([-22 +22 -22 +22]);
-legend([plot2],'Class 1','Class 2','Class 3','Class 4');
-title('Linearly seperable data using C-SVM');
+% axis([-22 +22 -22 +22]);
+legend([plot2],'Class 1','Class 2','Class 3');
+title('Linearly seperable data using C-SVM(polynomial kernel)');
