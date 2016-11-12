@@ -40,7 +40,7 @@ for i = 1:numClasses
    test_labels = [test_labels ; temp_labels];
 end
 
-model = svmtrain(train_labels, train_data,'-s 0 -t 2 -h 0');
+model = svmtrain(train_labels, train_data,'-s 0 -t 2 -h 0 -g 0.001');
 output_labels_val = svmpredict(val_labels, val_data, model);
 output_labels_test = svmpredict(test_labels, test_data, model);
 

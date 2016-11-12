@@ -25,20 +25,20 @@ for i = 1:numClasses
    tempSize = size(tempData,1);
    [trainTemp, valTemp, testTemp] = dividerand(tempSize, 0.7,0.15,0.15);
    for j = 1:size(trainTemp,2)
-        trainData = [trainData ; tempData(j,:)];
+        trainData = [trainData ; tempData(trainTemp(1,j),:)];
         trainLabel = [trainLabel ; i];
    end
    for j = 1:size(valTemp,2)
-        valData = [valData ; tempData(j,:)];
+        valData = [valData ; tempData(valTemp(1,j),:)];
         valLabel = [valLabel ; i];
    end
    for j = 1:size(testTemp,2)
-        testData = [testData ; tempData(j,:)];
+        testData = [testData ; tempData(testTemp(1,j),:)];
         testLabel = [testLabel ; i];
    end
    
 end
 
-model = svmtrain(trainLabel, trainData,'-s 0 -t 2 -h 0');
+model = svmtrain(trainLabel, trainData,'-s 0 -t 2 -h 0 -g 1e-10');
 output_labels_val = svmpredict(valLabel, valData, model);
 output_labels_test = svmpredict(testLabel, testData, model);
