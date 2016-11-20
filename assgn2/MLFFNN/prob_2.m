@@ -1,6 +1,6 @@
 load('../data/image_classfn/CompleteData.mat');
 numClasses = 5;
-numHiddenLayers = 20;
+hiddenNeurons = [30 30];
 endIndex = 0;
 tempSize = 0;
 trainInd = [];
@@ -38,13 +38,15 @@ for i = 1:numClasses
    targets = [targets temp_targets];
 end
 
-net = patternnet(numHiddenLayers);
-net.trainParam.epochs=100000;
-net.trainParam.max_fail=50000;
-net.trainParam.goal=1e-8;
-net.trainParam.min_grad=1e-8;
+net = patternnet(hiddenNeurons);
+net.trainParam.epochs=10000;
+net.trainParam.max_fail=5000;
+net.trainParam.goal=1e-6;
+net.trainParam.min_grad=1e-6;
 net.divideFcn = 'divideind';
 net.divideParam.trainInd = trainInd;
 net.divideParam.valInd = valInd;
 net.divideParam.testInd = testInd;
+% net.layers{1}.transferFcn='tansig';
+% net.layers{2}.transferFcn='tansig';
 [net,tr] = train(net,inputs,targets);

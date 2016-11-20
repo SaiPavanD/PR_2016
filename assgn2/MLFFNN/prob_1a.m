@@ -1,6 +1,6 @@
 root = '../data/linearly_Separable_Data/';
 numClasses = 4;
-numHiddenLayers = 2;
+numHiddenNeurons = [5 5];
 step = 0.05;
 
 inputs = [];
@@ -43,7 +43,7 @@ end
 
 [~,testInd] = size(inputs);
 
-net = patternnet(numHiddenLayers);
+net = patternnet(numHiddenNeurons);
 net.trainParam.epochs=1000;
 net.trainParam.max_fail=500;
 net.trainParam.goal=1e-10;

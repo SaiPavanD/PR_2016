@@ -1,6 +1,6 @@
 root = '../data/overlapping_data/';
 numClasses = 4;
-numHiddenLayers = 2;
+numHiddenNeurons = [3];
 step = 0.05;
 
 inputs = [];
@@ -43,7 +43,7 @@ end
 
 [~,testInd] = size(inputs);
 
-net = patternnet(numHiddenLayers);
+net = patternnet(numHiddenNeurons);
 net.trainParam.epochs=10000;
 net.trainParam.max_fail=1000;
 net.trainParam.goal=1e-8;
@@ -54,7 +54,7 @@ net.divideParam.valInd = trainInd+1:valInd;
 net.divideParam.testInd = valInd+1:testInd;
 [net,tr] = train(net,inputs,targets);
 
-[x,y] = meshgrid(min(inputs(1,:)):step:max(inputs(1,:)),min(inputs(2,:)):step:max(inputs(2,:)));
+[x,y] = meshgrid(min(inputs(1,:)):step:max(inputs(1,:)),-7:step:13);
 decisionRegionPoints = [x(:)';y(:)'];
 decisionRegionOutputs = net(decisionRegionPoints);
 [~,decisionRegionClassfn] = max(decisionRegionOutputs);

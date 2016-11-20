@@ -1,6 +1,20 @@
-load('../../data/image_classfn/CompleteData.mat');
+load('../data/image_classfn/CompleteData.mat');
 numClasses = 5;
 cond = 1;
+
+data{1}=CompleteData{17,1};
+data{2}=CompleteData{8,1};
+data{3}=CompleteData{19,1};
+data{4}=CompleteData{10,1};
+data{5}=CompleteData{6,1};
+totalImageData = [data{1,1}; data{1,2}; data{1,3}; data{1,4}; data{1,5}];
+Z = getPCA(totalImageData,993);
+Z1 = Z(1:216,:);
+Z2 = Z(217:371,:);
+Z3 = Z(372:562,:);
+Z4 = Z(563:764,:);
+Z5 = Z(765:993,:);
+
 
 while cond == 1
     trainData = [];
@@ -12,15 +26,15 @@ while cond == 1
     for i = 1:numClasses
        switch i
            case 1
-               tempData = CompleteData{17,1};
+               tempData = Z1;
            case 2
-               tempData = CompleteData{8,1};
+               tempData = Z2;
            case 3
-               tempData = CompleteData{19,1};
+               tempData = Z3;
            case 4
-               tempData = CompleteData{10,1};
+               tempData = Z4;
            case 5
-               tempData = CompleteData{6,1};
+               tempData = Z5;
        end
        tempSize = size(tempData,1);
        [trainTemp, valTemp, testTemp] = dividerand(tempSize, 0.7,0.15,0.15);
@@ -42,7 +56,7 @@ while cond == 1
     model = svmtrain(trainLabel, trainData,'-s 0 -c 10 -t 2 -q -g 1e-10');
     [output_labels_val, accu, ~] = svmpredict(valLabel, valData, model);
     accu(1,1)
-    if accu(1,1)>80
+    if accu(1,1)>75
         cond = 0;
     end
 end

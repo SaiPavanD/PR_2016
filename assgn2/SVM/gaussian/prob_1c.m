@@ -59,3 +59,12 @@ hold on;
 % axis([-22 +22 -22 +22]);
 legend([plot2],'Class 1','Class 2','Class 3','Class 4');
 title('Linearly seperable data using C-SVM(Gaussian kernel)');
+
+figure;
+testTargets = zeros(numClasses,size(test_data,1));
+testResults = zeros(numClasses,size(test_data,1));
+for i=1:size(test_data,1)
+    testTargets(test_labels(i,1),i)=1;
+    testResults(output_labels_test(i,1),i)=1;
+end
+plotconfusion(testTargets, testResults);

@@ -1,7 +1,7 @@
 root = '../../data/non-linearly_Separable/';
 numClasses = 3;
 c = 1;
-step = 0.05;
+step = 0.01;
 
 train_data = [];
 train_labels = [];
@@ -40,7 +40,7 @@ for i = 1:numClasses
    test_labels = [test_labels ; temp_labels];
 end
 
-model = svmtrain(train_labels, train_data,'-s 0 -t 2 -h 0 -g 1/3');
+model = svmtrain(train_labels, train_data,'-s 0 -t 2 -h 0 -g 1');
 output_labels_val = svmpredict(val_labels, val_data, model);
 output_labels_test = svmpredict(test_labels, test_data, model);
 
@@ -59,3 +59,12 @@ hold on;
 % axis([-22 +22 -22 +22]);
 legend([plot2],'Class 1','Class 2','Class 3');
 title('Linearly seperable data using C-SVM(Gaussian kernel)');
+
+figure;
+testTargets = zeros(numClasses,size(test_data,1));
+testResults = zeros(numClasses,size(test_data,1));
+for i=1:size(test_data,1)
+    testTargets(test_labels(i,1),i)=1;
+    testResults(output_labels_test(i,1),i)=1;
+end
+plotconfusion(testTargets, testResults);
